@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambassadors Educational Complex | AEC Official Website</title>
+    <meta name="description" content="Official website for Ambassadors Educational Complex (AEC), shaping tomorrow's ambassadors today in Yaoundé, Cameroon.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js CDN -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0A2A5E',
+                        secondary: '#D4AF37',
+                        accent: '#A6192E',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(10, 42, 94, 0.9) 0%, rgba(10, 42, 94, 0.6) 50%, transparent 100%);
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 smooth-scroll" x-data="{ 
+    lang: 'en', 
+    mobileMenu: false,
+    scrolled: false,
+    toggleLang() { this.lang = this.lang === 'en' ? 'fr' : 'en' },
+    content: {
+        en: {
+            nav: { home: 'Home', about: 'About', academics: 'Academics', admissions: 'Admissions', contact: 'Contact', portals: 'Portals' },
+            hero: { h1: 'Shaping Tomorrow\'s Ambassadors Today', p: 'Excellence in Bilingual Education for K-12', apply: 'Apply Now', visit: 'Book a Visit' },
+            stats: { years: 'Years of Excellence', students: 'Students Enrolled', teachers: 'Qualified Teachers', pass: 'Pass Rate' },
+            whatsapp: 'Chat with us'
+        },
+        fr: {
+            nav: { home: 'Accueil', about: 'À Propos', academics: 'Académique', admissions: 'Admissions', contact: 'Contact', portals: 'Espaces' },
+            hero: { h1: 'Former les Ambassadeurs de Demain', p: 'Excellence dans l\'Éducation Bilingue de la Maternelle au Lycée', apply: 'Postuler', visit: 'Réserver une Visite' },
+            stats: { years: 'Années d\'Excellence', students: 'Élèves Inscrits', teachers: 'Enseignants Qualifiés', pass: 'Taux de Réussite' },
+            whatsapp: 'Discutez avec nous'
+        }
+    }
+}" @scroll.window="scrolled = (window.pageYOffset > 50)">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="scrolled ? 'bg-white shadow-lg py-2' : 'bg-transparent py-4'">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl border-2 border-secondary shadow-lg">A</div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-lg leading-tight transition-colors" :class="scrolled ? 'text-primary' : 'text-white md:text-primary lg:text-white'">AMBASSADORS</span>
+                    <span class="text-[10px] tracking-[0.2em] font-medium text-secondary">EDUCATIONAL COMPLEX</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden lg:flex items-center gap-8">
+                <template x-for="item in ['home', 'about', 'academics', 'admissions', 'contact']">
+                    <a :href="'#' + item" class="text-sm font-semibold transition-colors hover:text-secondary" 
+                       :class="scrolled ? 'text-primary' : 'text-white'"
+                       x-text="content[lang].nav[item]"></a>
+                </template>
+                <button @click="toggleLang()" class="p-2 rounded-full border transition-colors flex items-center gap-2 text-xs font-bold"
+                        :class="scrolled ? 'border-primary text-primary hover:bg-primary hover:text-white' : 'border-white text-white hover:bg-white hover:text-primary'">
+                    <i data-lucide="globe" class="w-3 h-3"></i>
+                    <span x-text="lang === 'en' ? 'FRANCE 🇫🇷' : 'ENGLISH 🇬🇧'"></span>
+                </button>
+                <a href="#admissions" class="bg-secondary text-primary px-6 py-2 rounded-full font-bold text-sm hover:bg-white hover:scale-105 transition-all shadow-md">
+                    <span x-text="content[lang].hero.apply"></span>
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="lg:hidden flex items-center gap-4">
+                <button @click="toggleLang()" class="text-xs font-bold p-1 border rounded" :class="scrolled ? 'text-primary border-primary' : 'text-white border-white'">
+                    <span x-text="lang.toUpperCase()"></span>
+                </button>
+                <button @click="mobileMenu = !mobileMenu" class="p-1" :class="scrolled ? 'text-primary' : 'text-white'">
+                    <i data-lucide="menu" x-show="!mobileMenu" class="w-8 h-8"></i>
+                    <i data-lucide="x" x-show="mobileMenu" x-cloak class="w-8 h-8"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-cloak x-transition class="lg:hidden bg-white border-t p-6 shadow-2xl absolute w-full left-0">
+            <div class="flex flex-col gap-6">
+                <template x-for="item in ['home', 'about', 'academics', 'admissions', 'contact']">
+                    <a :href="'#' + item" @click="mobileMenu = false" class="text-xl font-bold text-primary" x-text="content[lang].nav[item]"></a>
+                </template>
+                <a href="#admissions" @click="mobileMenu = false" class="bg-primary text-white text-center py-4 rounded-xl font-bold" x-text="content[lang].hero.apply"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1523050335109-0ef03fe900c1?auto=format&fit=crop&q=80&w=1920" alt="Students" class="w-full h-full object-cover">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10 pt-20">
+            <div class="max-w-3xl space-y-8 animate-fade-in">
+                <div class="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/30 text-secondary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                    Admissions Open 2025/2026
+                </div>
+                <h1 class="text-5xl md:text-8xl font-serif font-bold text-white leading-tight" x-text="content[lang].hero.h1"></h1>
+                <p class="text-xl md:text-2xl text-gray-200 font-light max-w-xl" x-text="content[lang].hero.p"></p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#admissions" class="bg-secondary text-primary px-10 py-5 rounded-full font-bold text-xl flex items-center justify-center gap-3 hover:bg-white hover:scale-105 transition-all shadow-2xl">
+                        <span x-text="content[lang].hero.apply"></span>
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                    <a href="#about" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-5 rounded-full font-bold text-xl flex items-center justify-center gap-3 hover:bg-white/20 transition-all">
+                        <i data-lucide="play" class="fill-white"></i>
+                        <span x-text="content[lang].hero.visit"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-primary py-20 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="text-center group">
+                <div class="bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 text-secondary group-hover:bg-secondary group-hover:text-primary transition-all">
+                    <i data-lucide="award" class="w-8 h-8"></i>
+                </div>
+                <div class="text-4xl md:text-6xl font-serif font-bold text-white mb-2">15+</div>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest" x-text="content[lang].stats.years"></p>
+            </div>
+            <div class="text-center group">
+                <div class="bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 text-secondary group-hover:bg-secondary group-hover:text-primary transition-all">
+                    <i data-lucide="users" class="w-8 h-8"></i>
+                </div>
+                <div class="text-4xl md:text-6xl font-serif font-bold text-white mb-2">500+</div>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest" x-text="content[lang].stats.students"></p>
+            </div>
+            <div class="text-center group">
+                <div class="bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 text-secondary group-hover:bg-secondary group-hover:text-primary transition-all">
+                    <i data-lucide="user-check" class="w-8 h-8"></i>
+                </div>
+                <div class="text-4xl md:text-6xl font-serif font-bold text-white mb-2">45</div>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest" x-text="content[lang].stats.teachers"></p>
+            </div>
+            <div class="text-center group">
+                <div class="bg-white/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 text-secondary group-hover:bg-secondary group-hover:text-primary transition-all">
+                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                </div>
+                <div class="text-4xl md:text-6xl font-serif font-bold text-white mb-2">100%</div>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest" x-text="content[lang].stats.pass"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="py-24 bg-white">
+        <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div class="space-y-8">
+                <span class="text-secondary font-extrabold uppercase tracking-widest text-sm" x-text="lang === 'en' ? 'Why AEC?' : 'Pourquoi AEC?'"></span>
+                <h2 class="text-4xl md:text-6xl font-serif font-bold text-primary leading-tight">Engaging Environment for Future Leaders</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">We combine academic rigor with moral grounding to produce "Ambassadors" who are ready to face global challenges with excellence and integrity.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="check-circle-2" class="text-secondary w-6 h-6"></i>
+                        <span class="font-bold text-gray-800">English Sub-System</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="check-circle-2" class="text-secondary w-6 h-6"></i>
+                        <span class="font-bold text-gray-800">French Sub-System</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="check-circle-2" class="text-secondary w-6 h-6"></i>
+                        <span class="font-bold text-gray-800">STEM Focused</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="check-circle-2" class="text-secondary w-6 h-6"></i>
+                        <span class="font-bold text-gray-800">Qualified Faculty</span>
+                    </div>
+                </div>
+                
+                <a href="#contact" class="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:bg-neutral-800 transition-all">
+                    Discover More
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1544717297-fa95b3bd9a96?auto=format&fit=crop&q=80&w=800" alt="Students" class="rounded-3xl shadow-2xl relative z-10 w-full object-cover h-[600px]">
+                <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-secondary rounded-full flex flex-col items-center justify-center text-primary z-20 shadow-2xl rotate-12">
+                   <i data-lucide="star" class="w-8 h-8 mb-1"></i>
+                   <span class="font-bold text-xl uppercase">TOP RATED</span>
+                   <span class="text-[10px] font-bold">IN YAOUNDÉ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Grid -->
+    <section id="academics" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <h2 class="text-primary font-bold text-4xl md:text-5xl font-serif">Academic Pathways</h2>
+                <p class="text-gray-500">From the first steps in Nursery to the final year of High School, we offer a cohesive learning experience.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Nursery -->
+                <div class="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl bg-primary">
+                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=600" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white space-y-3 translate-y-8 group-hover:translate-y-0 transition-all duration-500">
+                        <div class="bg-blue-500 w-12 h-12 rounded-xl flex items-center justify-center mb-2"><i data-lucide="baby"></i></div>
+                        <h3 class="text-2xl font-serif font-bold">Maternelle</h3>
+                        <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Nurturing curiosity and social skills in our youngest learners.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-secondary font-bold text-sm">Explore <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                <!-- Primary -->
+                <div class="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl bg-primary">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=600" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white space-y-3 translate-y-8 group-hover:translate-y-0 transition-all duration-500">
+                        <div class="bg-green-500 w-12 h-12 rounded-xl flex items-center justify-center mb-2"><i data-lucide="school"></i></div>
+                        <h3 class="text-2xl font-serif font-bold">Primary</h3>
+                        <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Building a strong foundation in literacy, numeracy, and bilingualism.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-secondary font-bold text-sm">Explore <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                <!-- Secondary -->
+                <div class="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl bg-primary">
+                    <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=600" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white space-y-3 translate-y-8 group-hover:translate-y-0 transition-all duration-500">
+                        <div class="bg-purple-500 w-12 h-12 rounded-xl flex items-center justify-center mb-2"><i data-lucide="pen-tool"></i></div>
+                        <h3 class="text-2xl font-serif font-bold">Secondary</h3>
+                        <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Preparing for GCE/BEPC with analytical and creative thinking.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-secondary font-bold text-sm">Explore <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                <!-- High School -->
+                <div class="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl bg-primary">
+                    <img src="https://images.unsplash.com/photo-1523050335109-0ef03fe900c1?auto=format&fit=crop&q=80&w=600" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 text-white space-y-3 translate-y-8 group-hover:translate-y-0 transition-all duration-500">
+                        <div class="bg-red-500 w-12 h-12 rounded-xl flex items-center justify-center mb-2"><i data-lucide="graduation-cap"></i></div>
+                        <h3 class="text-2xl font-serif font-bold">High School</h3>
+                        <p class="text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Final steps to university. Specialization in Science and Arts.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-secondary font-bold text-sm">Explore <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions & Contact -->
+    <section id="admissions" class="py-24 bg-white overflow-hidden">
+        <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div class="space-y-10">
+                <div>
+                   <h2 class="text-secondary font-bold uppercase tracking-widest text-sm mb-2">Step Forward</h2>
+                   <h3 class="text-5xl font-serif font-bold text-primary">Admission Process</h3>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="flex gap-6 items-start">
+                        <div class="bg-primary/5 w-14 h-14 rounded-2xl flex items-center justify-center text-primary shrink-0 font-black text-2xl">1</div>
+                        <div class="space-y-1">
+                            <h4 class="text-xl font-bold text-primary">Inquiry & Visit</h4>
+                            <p class="text-gray-600">Contact our office or visit our Emana campus for a guided tour.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div class="bg-primary/5 w-14 h-14 rounded-2xl flex items-center justify-center text-primary shrink-0 font-black text-2xl">2</div>
+                        <div class="space-y-1">
+                            <h4 class="text-xl font-bold text-primary">Form & Documents</h4>
+                            <p class="text-gray-600">Submit birth certificate, photos, and report cards from previous schools.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div class="bg-primary/5 w-14 h-14 rounded-2xl flex items-center justify-center text-primary shrink-0 font-black text-2xl">3</div>
+                        <div class="space-y-1">
+                            <h4 class="text-xl font-bold text-primary">Entrance Test</h4>
+                            <p class="text-gray-600">Placement assessment to match your child to the right class level.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 items-start">
+                        <div class="bg-primary/5 w-14 h-14 rounded-2xl flex items-center justify-center text-primary shrink-0 font-black text-2xl">4</div>
+                        <div class="space-y-1">
+                            <h4 class="text-xl font-bold text-primary">Enrollment</h4>
+                            <p class="text-gray-600">Payment of registration fees and issuance of parent/student ID.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-12 rounded-[3rem] shadow-2xl border border-gray-100 relative">
+                <h3 id="contact" class="text-3xl font-serif font-bold text-primary mb-8 underline decoration-secondary decoration-4 underline-offset-8">Quick Inquiry</h3>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase text-gray-400 pl-1">Parent Name</label>
+                            <input type="text" class="w-full bg-white border border-gray-200 px-6 py-4 rounded-2xl focus:outline-none focus:border-secondary transition-all shadow-sm" placeholder="e.g. John Doe">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase text-gray-400 pl-1">Phone Number</label>
+                            <input type="tel" class="w-full bg-white border border-gray-200 px-6 py-4 rounded-2xl focus:outline-none focus:border-secondary transition-all shadow-sm" placeholder="+237 ...">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase text-gray-400 pl-1">Student Level of Interest</label>
+                        <select class="w-full bg-white border border-gray-200 px-6 py-4 rounded-2xl focus:outline-none focus:border-secondary transition-all shadow-sm appearance-none">
+                            <option>Nursery / Maternelle</option>
+                            <option>Primary School</option>
+                            <option>Secondary School</option>
+                            <option>High School / Lycée</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-black uppercase text-gray-400 pl-1">Message (Optional)</label>
+                        <textarea rows="3" class="w-full bg-white border border-gray-200 px-6 py-4 rounded-2xl focus:outline-none focus:border-secondary transition-all shadow-sm resize-none" placeholder="Is there anything specific you would like to know?"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white py-5 rounded-2xl font-bold text-xl hover:bg-neutral-800 transition-all shadow-lg flex items-center justify-center gap-3">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        Submit Request
+                    </button>
+                    <p class="text-center text-xs text-gray-400 font-medium">We typically reply within 12 business hours.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 pt-20 pb-10 text-white">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <div class="space-y-6">
+                <a href="#" class="flex items-center gap-2">
+                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-2xl border-2 border-secondary shadow-lg">A</div>
+                    <div class="flex flex-col">
+                        <span class="font-serif font-bold text-xl leading-tight">AMBASSADORS</span>
+                        <span class="text-[10px] tracking-[0.2em] font-medium text-secondary">EDUCATIONAL COMPLEX</span>
+                    </div>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed" x-text="content[lang].footer.tagline"></p>
+                <div class="flex gap-4">
+                    <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-secondary hover:text-primary transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-secondary hover:text-primary transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-secondary hover:text-primary transition-all"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    <a href="#" class="p-3 bg-white/5 rounded-full hover:bg-secondary hover:text-primary transition-all"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-xl font-serif font-bold border-l-4 border-secondary pl-4" x-text="content[lang].footer.quickLinks"></h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="#home" class="hover:text-secondary transition-colors">Main Campus</a></li>
+                    <li><a href="#about" class="hover:text-secondary transition-colors">Our Mission</a></li>
+                    <li><a href="#academics" class="hover:text-secondary transition-colors">Academic Calendar</a></li>
+                    <li><a href="#admissions" class="hover:text-secondary transition-colors">Fee Schedule</a></li>
+                    <li><a href="#contact" class="hover:text-secondary transition-colors">Staff Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-xl font-serif font-bold border-l-4 border-secondary pl-4" x-text="content[lang].footer.contactInfo"></h4>
+                <div class="space-y-6 text-gray-400 text-sm">
+                    <div class="flex gap-4">
+                        <i data-lucide="map-pin" class="text-secondary shrink-0"></i>
+                        <span>Behind the Presidency, after GBHS Emana, Yaoundé, Cameroon</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <i data-lucide="phone" class="text-secondary shrink-0"></i>
+                        <div class="flex flex-col">
+                            <a href="tel:+237677637429" class="hover:text-secondary">+237 677 63 74 29</a>
+                            <a href="tel:+237679688792" class="hover:text-secondary">+237 679 68 87 92</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <i data-lucide="mail" class="text-secondary shrink-0"></i>
+                        <a href="mailto:info@aecemana.com" class="hover:text-secondary">info@aecemana.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-xl font-serif font-bold border-l-4 border-secondary pl-4" x-text="content[lang].footer.newsletter"></h4>
+                <p class="text-gray-400 text-sm">Join our newsletter for updates on school events and successes.</p>
+                <form class="flex gap-2">
+                    <input type="email" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm w-full outline-none focus:border-secondary" placeholder="Email Address">
+                    <button class="bg-secondary text-primary px-4 rounded-xl hover:bg-white transition-colors">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 pt-10 border-t border-white/10 text-center flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-xs">
+                &copy; <span x-text="new Date().getFullYear()"></span> Ambassadors Educational Complex. <span x-text="content[lang].footer.rights"></span>
+            </p>
+            <div class="flex gap-6 text-xs text-secondary font-bold">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Use</a>
+                <a href="#" class="hover:underline">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/237677637429?text=Hello%20AEC%2C%20I%20would%20like%20more%20information." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform group">
+        <i data-lucide="message-circle" class="w-8 h-8"></i>
+        <span class="absolute right-full mr-3 bg-white text-gray-800 px-4 py-2 rounded-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap pointer-events-none" x-text="content[lang].whatsapp"></span>
+    </a>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // Listen for Alpine updates to re-render Icons if needed
+        document.addEventListener('alpine:initialized', () => {
+             lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
